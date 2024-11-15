@@ -2,10 +2,17 @@ import { useState } from "react";
 import data from "./data";
 
 const Accordion = () => {
-    const [openId, setOpenId] = useState(null);
+    const [openId, setOpenId] = useState([]);
 
     const handleClick = (currentItemId) => {
-        setOpenId(openId === currentItemId ? null : currentItemId);
+        setOpenId((prevID)=>
+            openId.includes(currentItemId)?
+        prevID.filter(id=>id!==currentItemId):
+        [...prevID,currentItemId]
+
+
+
+        );
     };
 
     return (
@@ -19,9 +26,9 @@ const Accordion = () => {
                     >
                         <div className="question">
                             <h3>{dataItem.question}</h3>
-                            <span>{openId === dataItem.id ? "-" : "+"}</span> {/* Fixed to use openId */}
+                            <span>{openId.includes(dataItem.id) ? "-" : "+"}</span> {/* Fixed to use openId */}
                         </div>
-                        {openId === dataItem.id && (
+                        {openId.includes(dataItem.id)  && (
                             <div className="answer">
                                 <p>{dataItem.answer}</p>
                             </div>
